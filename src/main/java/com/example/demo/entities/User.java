@@ -2,12 +2,21 @@ package com.example.demo.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class User implements Serializable  //A interface Serializable é utilizada quando é desejado que os objetos possam ser transformados
 //em cadeias de bytes. Para que o objeto trafégue na rede, que ele possa ser gravado em arquivo e etc.
 {
 	private static final long serialVersionUID = 1L;
 	
+	@Id	//Indicando ao JPA qual é a chave primária, no caso é o id.
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //Chave autoincrementada no banco de dados.
 	private Long id;
+	
 	private String name; 
 	private String email; 
 	private String phone;
