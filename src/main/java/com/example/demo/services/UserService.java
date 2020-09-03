@@ -36,4 +36,20 @@ public class UserService
 	{
 		repository.deleteById(id);
 	}
+	
+	public User update(Long id, User obj)
+	{
+		User entity = repository.getOne(id); 							//O método getOne instancia o usuário, porém não faz alteração no banco de dados imediatamente. Ele apenas deixará o objeto monitorado.
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) 
+	{
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+	}
+	
+	
 }
