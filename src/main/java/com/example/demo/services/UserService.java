@@ -3,6 +3,8 @@ package com.example.demo.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -54,9 +56,16 @@ public class UserService
 	
 	public User update(Long id, User obj)
 	{
+		try
+		{
 		User entity = repository.getOne(id); 							//O método getOne instancia o usuário, porém não faz alteração no banco de dados imediatamente. Ele apenas deixará o objeto monitorado.
 		updateData(entity, obj);
 		return repository.save(entity);
+		}
+		catch(EntityNotFoundException e)
+		{
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) 
